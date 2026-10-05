@@ -234,9 +234,9 @@ const DATA = {
     { label: "結婚當日", date: "2027-10-30", place: "Green House" }
   ],
   urgent: [
-    { t: "旅遊保險", d: "機票已訂，保險仍未買" },
-    { t: "Pre-wedding 酒店確認", d: "10/14–17，待 SA 確認訂房" },
-    { t: "自備清單", d: "鞋／男士恤衫／內搭／雨具——仍有未買（見 Drive）" }
+    { t: "旅遊保險", d: "仍未買" },
+    { t: "Pre 酒店／接人／收據", d: "待 SA 回覆（細節見 Drive）" },
+    { t: "自備＋寄行李", d: "fashion 自備未齊；Airbnb 寄行李待確認" }
   ],
   budget: { total: 0, actual: 0, paid: 0, note: "金額見 Drive／預算管家" },
   vendors: [
@@ -270,7 +270,8 @@ const DATA = {
       { t: "報名優惠", d: "減 $2,500", s: "ok", c: "已選" },
       { t: "酒店 10/14–17", d: "待 SA 確認", s: "half", c: "待確認" },
       { t: "旅遊保險", s: "no", c: "未買" },
-      { t: "自備（鞋／恤衫／內搭／雨具）", d: "仍有未買・見 Drive", s: "half", c: "未齊" },
+      { t: "自備（鞋／恤衫／內搭／雨具）", d: "fashion 跟進・見 Drive", s: "half", c: "未齊" },
+      { t: "Airbnb 寄行李", d: "待確認・見 Drive", s: "half", c: "待確認" },
       { t: "婚紗／西裝參考", d: "已有 SA 參考・見 Doc", s: "half", c: "見 Doc" },
       { t: "SA 尾款核對", d: "細節見 Drive", s: "half", c: "待核" },
       { t: "拍攝當日行程", d: "細節見 Drive", s: "half", c: "骨架有" },
@@ -307,8 +308,8 @@ const DATA = {
     ]
   },
   lanes: [
-    { k: "red", title: "紅・緊急", desc: "而家就要處理", items: ["旅遊保險", "Pre-wedding 酒店確認", "自備未買項目"] },
-    { k: "yellow", title: "黃・近期", desc: "Pre-wedding 前後要跟", items: ["SA 尾款核對", "拍攝當日接人時間", "賓客削至 ≤120", "Pre 後成片"] },
+    { k: "red", title: "紅・緊急", desc: "而家就要處理", items: ["旅遊保險", "SA 酒店／接人／收據", "fashion 自備未齊"] },
+    { k: "yellow", title: "黃・近期", desc: "Pre-wedding 前後要跟", items: ["Airbnb 寄行李確認", "賓客削至 ≤120", "SA 尾款核對", "Pre 後成片"] },
     { k: "green", title: "綠・按部就班", desc: "唔急，但要陸續推進（未完成）", items: ["Green House 合同收口", "喜帖", "2P2V", "化妝・花藝・MC・Song List", "座位表", "當日時間表"] },
     { k: "after", title: "事後", desc: "婚禮之後", items: ["多謝卡", "相片尾款・紀念"] }
   ],
