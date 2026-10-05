@@ -86,6 +86,7 @@ ul.list .t small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
 .lane .desc{font-size:12px;color:var(--muted);margin:-2px 0 6px}
 .note{font-size:13px;color:var(--muted)}
 .callout{background:var(--accent-soft);border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:14px}
+.callout.err{background:var(--red-bg);color:var(--red)}
 .placeholder{color:var(--muted);font-style:italic}
 .links a{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
 .links a:first-child{border-top:0}
@@ -151,6 +152,7 @@ body.lb-open{overflow:hidden}
 </header>
 
 <main>
+<div id="loadState" class="callout" role="status" aria-live="polite">載入資料中…</div>
 <!-- ============ 1. 首頁／總覽 ============ -->
 <section class="page" id="p-home">
   <div class="grid2" id="dateCards"></div>
@@ -290,127 +292,10 @@ body.lb-open{overflow:hidden}
 
 <script>
 /* =========================================================
-   DATA — 改資料只需要改呢度（唔好加賓客姓名）
+   DATA — 每日進度只改 data.json（fetch）。唔好加賓客姓名、金額、訂單號。
    status: ok=已完成/已確認(100) half=進行中/半鎖定/待確認(50) no=未開始/未決(0)
    ========================================================= */
-const DATA = {
-  asOf: "2026-10-05",
-  dates: [
-    { label: "Pre-wedding 拍攝", date: "2026-10-15", place: "濟州" },
-    { label: "結婚當日", date: "2027-10-30", place: "Green House" }
-  ],
-  urgent: [
-    { t: "旅遊保險", d: "仍未買" },
-    { t: "Pre 酒店／接人／收據", d: "待 SA 回覆（細節見 Drive）" },
-    { t: "自備＋寄行李", d: "fashion 自備未齊；Airbnb 寄行李待確認" }
-  ],
-  budget: { total: 0, actual: 0, paid: 0, note: "金額見 Drive／預算管家" },
-  vendors: [
-    { name: "Green House（場地）", actual: 0, paid: 0, note: "金額見 Drive・已付約一半" },
-    { name: "SA Wedding（Pre-wedding）", actual: 0, paid: 0, note: "報名優惠已選減 $2,500・其餘金額見 Drive" }
-  ],
-  pre: {
-    info: [
-      ["供應商", "SA Wedding Team 3"],
-      ["拍攝日", "2026-10-15（已確認）"],
-      ["濟州住宿", "2026-10-14 至 10-17（酒店待 SA 確認）"],
-      ["機票", "已訂（日期見行程；航班細節見 Drive）"],
-      ["首爾", "10/17–18 一晚"],
-      ["回港", "10/19"],
-      ["報名優惠", "已選減 $2,500"]
-    ],
-    timeline: [
-      { when: "10/14", t: "飛濟州 ＋ 酒店入住", s: "ok", c: "機票已訂" },
-      { when: "10/15", t: "拍攝日：日間 ＋ 日落前", s: "ok", c: "已確認" },
-      { when: "10/17", t: "飛首爾・住一晚", s: "ok", c: "已訂" },
-      { when: "10/19", t: "回港", s: "ok", c: "機票已訂" }
-    ],
-    elements: ["粉紅芒草", "蕎麥花", "樹林夕陽", "海邊（非沙灘）"],
-    rejected: ["氦氣球", "鮮花球"],
-    checklist: [
-      { t: "供應商 SA Wedding Team 3", s: "ok", c: "已確認" },
-      { t: "拍攝日 2026-10-15", s: "ok", c: "已確認" },
-      { t: "拍攝元素", d: "粉紅芒草／蕎麥花／樹林夕陽／海", s: "ok", c: "已定" },
-      { t: "機票 10/14・10/17・10/19", d: "已訂・細節見 Drive", s: "ok", c: "已訂" },
-      { t: "首爾住宿 10/17–18", d: "一晚・細節見 Drive", s: "ok", c: "已訂" },
-      { t: "報名優惠", d: "減 $2,500", s: "ok", c: "已選" },
-      { t: "酒店 10/14–17", d: "待 SA 確認", s: "half", c: "待確認" },
-      { t: "旅遊保險", s: "no", c: "未買" },
-      { t: "自備（鞋／恤衫／內搭／雨具）", d: "fashion 跟進・見 Drive", s: "half", c: "未齊" },
-      { t: "Airbnb 寄行李", d: "待確認・見 Drive", s: "half", c: "待確認" },
-      { t: "婚紗／西裝參考", d: "睇 Look 分頁・細節見 Doc", s: "half", c: "見 Look" },
-      { t: "SA 尾款核對", d: "細節見 Drive", s: "half", c: "待核" },
-      { t: "拍攝當日行程", d: "細節見 Drive", s: "half", c: "骨架有" },
-      { t: "Pre 後成片", d: "拍攝後跟進", s: "no", c: "未到" }
-    ]
-  },
-  day: {
-    venue: [
-      ["場地", "Green House（半鎖定）"],
-      ["形式", "Lawn Ceremony ＋ Dinner Buffet"],
-      ["目標人數", "≤120（已定目標）"],
-      ["費用", "已付約一半・細節見 Drive"],
-      ["交通", "錦上路 27 座旅遊巴，每 30 分鐘一班"],
-      ["晚宴時長", "約 6 小時"]
-    ],
-    guests: { list: 167, tbc: 30, venue: 120 },
-    flow: ["出入門", "草坪證婚", "迎賓", "進場", "誓詞", "晚宴／敬酒／送客"],
-    songs: [
-      { t: "Reception 等", d: "已有初稿約 32 首", s: "half", c: "初稿" },
-      { t: "Lawn Ceremony", d: "待補", s: "no", c: "待補" }
-    ],
-    checklist: [
-      { t: "場地 Green House", d: "Lawn ＋ Buffet；訂金進度見 Drive", s: "half", c: "半鎖定" },
-      { t: "賓客人數", d: "目標 ≤120・削客進行中", s: "half", c: "目標已定" },
-      { t: "GH 合同收口", s: "no", c: "待跟進" },
-      { t: "喜帖", d: "人數收口後再定最終", s: "no", c: "未開始" },
-      { t: "2P2V", s: "no", c: "未開始" },
-      { t: "化妝", s: "no", c: "未開始" },
-      { t: "花藝", s: "no", c: "未開始" },
-      { t: "MC", s: "no", c: "未開始" },
-      { t: "Song List", d: "Reception 初稿約 32 首；Lawn 待補", s: "half", c: "初稿" },
-      { t: "座位表", d: "人數收口後", s: "no", c: "未開始" },
-      { t: "當日時間表", d: "流程骨架已有", s: "no", c: "未開始" }
-    ]
-  },
-  lanes: [
-    { k: "red", title: "紅・緊急", desc: "而家就要處理", items: ["旅遊保險", "SA 酒店／接人／收據", "fashion 自備未齊"] },
-    { k: "yellow", title: "黃・近期", desc: "Pre-wedding 前後要跟", items: ["Airbnb 寄行李確認", "賓客削至 ≤120", "SA 尾款核對", "Pre 後成片"] },
-    { k: "green", title: "綠・按部就班", desc: "唔急，但要陸續推進（未完成）", items: ["Green House 合同收口", "喜帖", "2P2V", "化妝・花藝・MC・Song List", "座位表", "當日時間表"] },
-    { k: "after", title: "事後", desc: "婚禮之後", items: ["多謝卡", "相片尾款・紀念"] }
-  ],
-  notes: [
-    { t: "賓客目標 ≤120（已定）", d: "名單約 167、TBC 約 30——削客進行中", s: "half", c: "進行中" },
-    { t: "人數收口前，喜帖／桌次唔好當最終版", s: "no", c: "重要" },
-    { t: "濟州酒店：待 SA 確認訂房", s: "half", c: "待確認" },
-    { t: "機票已訂；旅遊保險未買", s: "half", c: "保險未買" },
-    { t: "自備清單仍有未買", d: "鞋／恤衫／內搭／雨具・見 Drive", s: "half", c: "未齊" },
-    { t: "SA 婚紗／西裝參考已有", d: "睇 Look 分頁・細節見 Doc", s: "tbd", c: "見 Look" },
-    { t: "SA 尾款／收據對帳", d: "細節見 Drive", s: "half", c: "待核" },
-    { t: "Pre-wedding 同大日子分開處理", s: "tbd", c: "提醒" },
-    { t: "所有金額以 Wedding Planning 表為準", s: "tbd", c: "提醒" }
-  ],
-  links: [
-    { t: "婚禮總覽 Doc", u: "https://docs.google.com/document/d/1NW8eIuWfjq3XF1HhQ7F88jk1razGWUK1KMKwrkpSdAs/edit" },
-    { t: "Wedding Planning 表", u: "https://docs.google.com/spreadsheets/d/19PsnliWSnux_M57P9YWxTJOQnfvnDwYGesC5yBfWNTA/edit" },
-    { t: "Pre-wedding Drive 夾", u: "https://drive.google.com/drive/folders/1p6M_vS-yViaX4RvvtD93MZSuqG_NP24F" },
-    { t: "Look・揀衫 Doc", u: "https://docs.google.com/document/d/1dUa2bC4Vw0VfcDj8IH0grClKQFlPgODGgIXtCq8RXFI/edit" },
-    { t: "Look 相片夾", u: "https://drive.google.com/drive/folders/10TN0-RzRUzVhvFPLRJ8qpq6VFmG4UqyW" }
-  ],
-  looks: [
-    { id: "sybil", file: "looks/sybil.jpg", thumb: "looks/sybil-thumb.jpg", title: "Sybil A-line", tags: ["female", "A"] },
-    { id: "look-01", file: "looks/look-01.jpg", thumb: "looks/look-01-thumb.jpg", title: "珠繡 Sweetheart 蓬裙", tags: ["female", "A"] },
-    { id: "look-02", file: "looks/look-02.jpg", thumb: "looks/look-02-thumb.jpg", title: "直領珠繡 A-line", tags: ["female", "A"] },
-    { id: "look-03", file: "looks/look-03.jpg", thumb: "looks/look-03-thumb.jpg", title: "長袖蕾絲蓬裙", tags: ["female", "A"] },
-    { id: "look-04", file: "looks/look-04.jpg", thumb: "looks/look-04-thumb.jpg", title: "白西裝短裙", tags: ["female", "B"] },
-    { id: "look-05", file: "looks/look-05.jpg", thumb: "looks/look-05-thumb.jpg", title: "綠短裙／橄欖男裝", tags: ["female", "B", "C", "male", "2"], note: "女＋男" },
-    { id: "look-06", file: "looks/look-06.jpg", thumb: "looks/look-06-thumb.jpg", title: "黑 slip／黑西裝", tags: ["female", "C", "male", "1"], note: "女＋男" },
-    { id: "look-07", file: "looks/look-07.jpg", thumb: "looks/look-07-thumb.jpg", title: "Sage 蓬袖", tags: ["female", "C"] },
-    { id: "look-08", file: "looks/look-08.jpg", thumb: "looks/look-08-thumb.jpg", title: "Veronica mermaid", tags: ["female", "A"] },
-    { id: "look-09", file: "looks/look-09.jpg", thumb: "looks/look-09-thumb.jpg", title: "Cathy", tags: ["female", "A"] },
-    { id: "look-10", file: "looks/look-10.jpg", thumb: "looks/look-10-thumb.jpg", title: "珠繡 Sheath／深藍黑男裝", tags: ["female", "A", "male", "1", "3"], note: "女＋男・男裝開領，讀作較休閒" }
-  ]
-};
+let DATA = null;
 
 /* ========================= RENDER ========================= */
 const $ = id => document.getElementById(id);
@@ -429,6 +314,7 @@ function hkToday() {
 }
 function daysTo(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - hkToday()) / 86400000); }
 
+function renderAll() {
 $("asOf").textContent = DATA.asOf;
 
 // 首頁
@@ -477,6 +363,8 @@ $("lanes").innerHTML = DATA.lanes.map(l => `<div class="lane ${l.k}"><h3><span c
 // 注意事項
 $("noteList").innerHTML = listHTML(DATA.notes);
 $("links").innerHTML = DATA.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener"><span>${esc(l.t)}</span><span>開啟 ↗</span></a>`).join("");
+  renderLooks();
+}
 
 // Look／揀衫
 const LOOK_TAG = { A: "A 經典", B: "B 輕短", C: "C editorial", "1": "1 黑深藍", "2": "2 橄欖", "3": "3 休閒" };
@@ -495,10 +383,16 @@ let lookFilter = "all";
 let lbPos = 0;
 
 function lookMatches(item, f) { return f === "all" || item.tags.includes(f); }
-function filteredLooks() { return DATA.looks.filter(it => lookMatches(it, lookFilter)); }
+function filteredLooks() {
+  if (!DATA || !Array.isArray(DATA.looks)) return [];
+  return DATA.looks.filter(it => lookMatches(it, lookFilter));
+}
 function lookStyleTags(item) { return LOOK_ORDER.filter(t => item.tags.includes(t)); }
 function isCouple(item) { return item.tags.includes("female") && item.tags.includes("male"); }
-function lookCount(id) { return DATA.looks.filter(it => lookMatches(it, id)).length; }
+function lookCount(id) {
+  if (!DATA || !Array.isArray(DATA.looks)) return 0;
+  return DATA.looks.filter(it => lookMatches(it, id)).length;
+}
 
 function renderLooks() {
   const btn = f => `<button type="button" class="fchip${lookFilter === f.id ? " active" : ""}" data-filter="${esc(f.id)}" aria-pressed="${lookFilter === f.id}">${esc(f.label)}<span class="n">${lookCount(f.id)}</span></button>`;
@@ -586,9 +480,7 @@ $("lightbox").addEventListener("touchend", e => {
   touchX = null;
   if (Math.abs(dx) > 48) stepLb(dx < 0 ? 1 : -1);
 }, { passive: true });
-renderLooks();
-
-// Tabs（hash routing，file:// 都用得）
+// Tabs（hash routing）。資料靠 fetch('data.json')，要 http(s) 先載入到。
 const TABS = ["home", "pre", "day", "board", "notes", "look"];
 function show() {
   const id = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "home";
@@ -599,6 +491,28 @@ function show() {
 }
 window.addEventListener("hashchange", show);
 show();
+
+async function loadData() {
+  const state = $("loadState");
+  state.hidden = false;
+  state.className = "callout";
+  state.textContent = "載入資料中…";
+  try {
+    const res = await fetch("data.json", { cache: "no-cache" });
+    if (!res.ok) throw new Error("HTTP " + res.status);
+    const data = await res.json();
+    if (!data || typeof data.asOf !== "string" || !Array.isArray(data.looks)) throw new Error("bad shape");
+    DATA = data;
+    renderAll();
+    state.hidden = true;
+    state.textContent = "";
+  } catch (err) {
+    state.hidden = false;
+    state.className = "callout err";
+    state.textContent = "載入 data.json 失敗。請用本機 http server 開啟（唔好直接雙擊檔案），或重新整理等 GitHub Pages 更新。";
+  }
+}
+loadData();
 </script>
 </body>
 </html>
