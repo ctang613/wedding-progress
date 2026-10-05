@@ -93,13 +93,53 @@ ul.list .t small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
 footer{max-width:640px;margin:8px auto 0;padding:0 18px;text-align:center;font-size:12px;color:var(--muted)}
 nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(255,253,250,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
   border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom)}
-nav.tabs a{flex:1;height:var(--tabh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:11px;font-weight:600}
-nav.tabs a .ic{font-size:19px;line-height:1;filter:grayscale(1);opacity:.65}
+nav.tabs a{flex:1;min-width:0;height:var(--tabh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:10px;font-weight:600;padding:0 1px}
+nav.tabs a .ic{font-size:17px;line-height:1;filter:grayscale(1);opacity:.65}
+nav.tabs a .lbl{max-width:100%;line-height:1.15;text-align:center}
 nav.tabs a.active{color:var(--accent)}
 nav.tabs a.active .ic{filter:none;opacity:1}
+.look-intro{margin:0 4px 10px}
+.look-filters{position:sticky;top:0;z-index:8;margin:0 -14px 10px;padding:8px 14px 10px;background:rgba(247,242,236,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.frow{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.frow+.frow{margin-top:6px}
+.glbl{font-size:11px;font-weight:700;color:var(--muted);min-width:1.1em}
+button.fchip{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);font:inherit;font-size:12px;font-weight:600;padding:5px 10px;border-radius:99px;cursor:pointer}
+button.fchip .n{margin-left:5px;font-weight:600;opacity:.72}
+button.fchip.active{background:var(--accent);border-color:var(--accent);color:#fff}
+button.fchip.active .n{opacity:1}
+#lookHelp{margin:0 4px 12px}
+.look-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+button.look-card{appearance:none;text-align:left;font:inherit;color:inherit;cursor:pointer;background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:8px;margin:0;box-shadow:0 1px 2px rgba(80,60,50,.04)}
+button.look-card img{width:100%;aspect-ratio:3/4;object-fit:contain;background:#f3ece6;border-radius:12px;display:block}
+button.look-card .lt{font-size:13px;font-weight:700;margin:8px 2px 6px;line-height:1.35}
+button.look-card .tags .chip{font-size:10px;padding:2px 7px}
+.lb{position:fixed;inset:0;z-index:40;background:rgba(24,18,16,.92);display:flex;align-items:center;justify-content:center;padding:calc(18px + env(safe-area-inset-top)) 52px calc(18px + env(safe-area-inset-bottom))}
+.lb[hidden]{display:none}
+.lb-stage{max-width:min(960px,100%);max-height:100%;display:flex;flex-direction:column;align-items:center;min-width:0}
+.lb-stage img{max-width:100%;max-height:min(72vh,820px);object-fit:contain;border-radius:10px;background:#1c1614}
+.lb-cap{color:#f7f2ec;text-align:center;margin-top:12px;max-width:520px}
+.lb-title{font-size:16px;font-weight:700}
+.lb-note{font-size:13px;opacity:.85;margin-top:2px}
+.lb-cap .tags{justify-content:center;margin-top:8px}
+.lb-cap .chip{background:rgba(255,255,255,.14);color:#f7f2ec}
+.lb-idx{font-size:12px;opacity:.7;margin-top:8px}
+.lb-x,.lb-nav{position:absolute;border:0;background:rgba(255,255,255,.14);color:#fff;cursor:pointer;display:grid;place-items:center}
+.lb-x{top:calc(10px + env(safe-area-inset-top));right:12px;width:40px;height:40px;border-radius:50%;font-size:26px;line-height:1}
+.lb-nav{top:42%;width:40px;height:40px;border-radius:50%;font-size:28px;line-height:1}
+.lb-nav.prev{left:8px}
+.lb-nav.next{right:8px}
+.lb-nav:disabled{opacity:.35;cursor:default}
+body.lb-open{overflow:hidden}
+@media (max-width:360px){
+  nav.tabs a{font-size:9px}
+  nav.tabs a .ic{font-size:16px}
+}
 @media (min-width:700px){
   nav.tabs{max-width:640px;margin:0 auto 14px;border:1px solid var(--line);border-radius:22px;left:14px;right:14px}
+  nav.tabs a{font-size:11px}
+  nav.tabs a .ic{font-size:18px}
   .hero h1{font-size:30px}
+  .look-grid{grid-template-columns:1fr 1fr 1fr}
 }
 </style>
 </head>
@@ -211,17 +251,42 @@ nav.tabs a.active .ic{filter:none;opacity:1}
     <p class="note" style="margin:0">本頁可經連結分享，所以唔會顯示任何賓客姓名或聯絡資料；賓客只列人數。</p>
   </div>
 </section>
+
+<!-- ============ 6. Look／揀衫 ============ -->
+<section class="page" id="p-look">
+  <h2>Look・揀衫</h2>
+  <p class="note look-intro">婚紗同西裝參考相。細節見 <a id="lookDoc" href="https://docs.google.com/document/d/1dUa2bC4Vw0VfcDj8IH0grClKQFlPgODGgIXtCq8RXFI/edit" target="_blank" rel="noopener">Look Doc</a>，原相見 <a id="lookFolder" href="https://drive.google.com/drive/folders/10TN0-RzRUzVhvFPLRJ8qpq6VFmG4UqyW" target="_blank" rel="noopener">Drive 相片夾</a>。</p>
+  <div class="look-filters" id="lookFilters"></div>
+  <p class="note" id="lookHelp"></p>
+  <div class="look-grid" id="lookGrid"></div>
+</section>
 </main>
 
 <footer>資料來源：「婚禮總覽」Doc ＋ Wedding Planning 表。數字如有出入，以 Wedding Planning 為準。</footer>
 
 <nav class="tabs" id="tabs">
-  <a href="#home" data-tab="home"><span class="ic">🏠</span>總覽</a>
-  <a href="#pre" data-tab="pre"><span class="ic">📷</span>Pre-wedding</a>
-  <a href="#day" data-tab="day"><span class="ic">💍</span>結婚當日</a>
-  <a href="#board" data-tab="board"><span class="ic">🗂️</span>進度看板</a>
-  <a href="#notes" data-tab="notes"><span class="ic">📌</span>注意事項</a>
+  <a href="#home" data-tab="home"><span class="ic">🏠</span><span class="lbl">總覽</span></a>
+  <a href="#pre" data-tab="pre"><span class="ic">📷</span><span class="lbl">Pre-<wbr>wedding</span></a>
+  <a href="#day" data-tab="day"><span class="ic">💍</span><span class="lbl">結婚當日</span></a>
+  <a href="#board" data-tab="board"><span class="ic">🗂️</span><span class="lbl">進度看板</span></a>
+  <a href="#notes" data-tab="notes"><span class="ic">📌</span><span class="lbl">注意事項</span></a>
+  <a href="#look" data-tab="look"><span class="ic">👗</span><span class="lbl">Look</span></a>
 </nav>
+
+<div id="lightbox" class="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lbTitle">
+  <button type="button" class="lb-x" id="lbClose" aria-label="關閉">×</button>
+  <button type="button" class="lb-nav prev" id="lbPrev" aria-label="上一張">‹</button>
+  <div class="lb-stage">
+    <img id="lbImg" alt="">
+    <div class="lb-cap">
+      <div class="lb-title" id="lbTitle"></div>
+      <div class="lb-note" id="lbNote"></div>
+      <div class="tags" id="lbTags"></div>
+      <div class="lb-idx" id="lbIdx"></div>
+    </div>
+  </div>
+  <button type="button" class="lb-nav next" id="lbNext" aria-label="下一張">›</button>
+</div>
 
 <script>
 /* =========================================================
@@ -273,7 +338,7 @@ const DATA = {
       { t: "旅遊保險", s: "no", c: "未買" },
       { t: "自備（鞋／恤衫／內搭／雨具）", d: "fashion 跟進・見 Drive", s: "half", c: "未齊" },
       { t: "Airbnb 寄行李", d: "待確認・見 Drive", s: "half", c: "待確認" },
-      { t: "婚紗／西裝參考", d: "已有 SA 參考・見 Doc", s: "half", c: "見 Doc" },
+      { t: "婚紗／西裝參考", d: "睇 Look 分頁・細節見 Doc", s: "half", c: "見 Look" },
       { t: "SA 尾款核對", d: "細節見 Drive", s: "half", c: "待核" },
       { t: "拍攝當日行程", d: "細節見 Drive", s: "half", c: "骨架有" },
       { t: "Pre 後成片", d: "拍攝後跟進", s: "no", c: "未到" }
@@ -320,7 +385,7 @@ const DATA = {
     { t: "濟州酒店：待 SA 確認訂房", s: "half", c: "待確認" },
     { t: "機票已訂；旅遊保險未買", s: "half", c: "保險未買" },
     { t: "自備清單仍有未買", d: "鞋／恤衫／內搭／雨具・見 Drive", s: "half", c: "未齊" },
-    { t: "SA 婚紗／西裝參考已有", d: "見 Doc・唔喺公開站貼私人 link", s: "tbd", c: "見 Doc" },
+    { t: "SA 婚紗／西裝參考已有", d: "睇 Look 分頁・細節見 Doc", s: "tbd", c: "見 Look" },
     { t: "SA 尾款／收據對帳", d: "細節見 Drive", s: "half", c: "待核" },
     { t: "Pre-wedding 同大日子分開處理", s: "tbd", c: "提醒" },
     { t: "所有金額以 Wedding Planning 表為準", s: "tbd", c: "提醒" }
@@ -328,7 +393,22 @@ const DATA = {
   links: [
     { t: "婚禮總覽 Doc", u: "https://docs.google.com/document/d/1NW8eIuWfjq3XF1HhQ7F88jk1razGWUK1KMKwrkpSdAs/edit" },
     { t: "Wedding Planning 表", u: "https://docs.google.com/spreadsheets/d/19PsnliWSnux_M57P9YWxTJOQnfvnDwYGesC5yBfWNTA/edit" },
-    { t: "Pre-wedding Drive 夾", u: "https://drive.google.com/drive/folders/1p6M_vS-yViaX4RvvtD93MZSuqG_NP24F" }
+    { t: "Pre-wedding Drive 夾", u: "https://drive.google.com/drive/folders/1p6M_vS-yViaX4RvvtD93MZSuqG_NP24F" },
+    { t: "Look・揀衫 Doc", u: "https://docs.google.com/document/d/1dUa2bC4Vw0VfcDj8IH0grClKQFlPgODGgIXtCq8RXFI/edit" },
+    { t: "Look 相片夾", u: "https://drive.google.com/drive/folders/10TN0-RzRUzVhvFPLRJ8qpq6VFmG4UqyW" }
+  ],
+  looks: [
+    { id: "sybil", file: "looks/sybil.jpg", thumb: "looks/sybil-thumb.jpg", title: "Sybil A-line", tags: ["female", "A"] },
+    { id: "look-01", file: "looks/look-01.jpg", thumb: "looks/look-01-thumb.jpg", title: "珠繡 Sweetheart 蓬裙", tags: ["female", "A"] },
+    { id: "look-02", file: "looks/look-02.jpg", thumb: "looks/look-02-thumb.jpg", title: "直領珠繡 A-line", tags: ["female", "A"] },
+    { id: "look-03", file: "looks/look-03.jpg", thumb: "looks/look-03-thumb.jpg", title: "長袖蕾絲蓬裙", tags: ["female", "A"] },
+    { id: "look-04", file: "looks/look-04.jpg", thumb: "looks/look-04-thumb.jpg", title: "白西裝短裙", tags: ["female", "B"] },
+    { id: "look-05", file: "looks/look-05.jpg", thumb: "looks/look-05-thumb.jpg", title: "綠短裙／橄欖男裝", tags: ["female", "B", "C", "male", "2"], note: "女＋男" },
+    { id: "look-06", file: "looks/look-06.jpg", thumb: "looks/look-06-thumb.jpg", title: "黑 slip／黑西裝", tags: ["female", "C", "male", "1"], note: "女＋男" },
+    { id: "look-07", file: "looks/look-07.jpg", thumb: "looks/look-07-thumb.jpg", title: "Sage 蓬袖", tags: ["female", "C"] },
+    { id: "look-08", file: "looks/look-08.jpg", thumb: "looks/look-08-thumb.jpg", title: "Veronica mermaid", tags: ["female", "A"] },
+    { id: "look-09", file: "looks/look-09.jpg", thumb: "looks/look-09-thumb.jpg", title: "Cathy", tags: ["female", "A"] },
+    { id: "look-10", file: "looks/look-10.jpg", thumb: "looks/look-10-thumb.jpg", title: "珠繡 Sheath／深藍黑男裝", tags: ["female", "A", "male", "1", "3"], note: "女＋男・男裝開領，讀作較休閒" }
   ]
 };
 
@@ -398,10 +478,121 @@ $("lanes").innerHTML = DATA.lanes.map(l => `<div class="lane ${l.k}"><h3><span c
 $("noteList").innerHTML = listHTML(DATA.notes);
 $("links").innerHTML = DATA.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener"><span>${esc(l.t)}</span><span>開啟 ↗</span></a>`).join("");
 
+// Look／揀衫
+const LOOK_TAG = { A: "A 經典", B: "B 輕短", C: "C editorial", "1": "1 黑深藍", "2": "2 橄欖", "3": "3 休閒" };
+const LOOK_ORDER = ["A", "B", "C", "1", "2", "3"];
+const LOOK_FILTERS = [
+  { id: "all", label: "全部" },
+  { id: "A", label: "A 經典", who: "女" },
+  { id: "B", label: "B 輕短", who: "女" },
+  { id: "C", label: "C editorial", who: "女" },
+  { id: "1", label: "1 黑深藍", who: "男" },
+  { id: "2", label: "2 橄欖", who: "男" },
+  { id: "3", label: "3 休閒", who: "男" }
+];
+const LOOK_HELP = "點相放大。有女裝同男裝嘅相會標「女＋男」，兩邊篩選都見得到。休閒多為開領白恤衫方向（細節見 Drive Doc）。";
+let lookFilter = "all";
+let lbPos = 0;
+
+function lookMatches(item, f) { return f === "all" || item.tags.includes(f); }
+function filteredLooks() { return DATA.looks.filter(it => lookMatches(it, lookFilter)); }
+function lookStyleTags(item) { return LOOK_ORDER.filter(t => item.tags.includes(t)); }
+function isCouple(item) { return item.tags.includes("female") && item.tags.includes("male"); }
+function lookCount(id) { return DATA.looks.filter(it => lookMatches(it, id)).length; }
+
+function renderLooks() {
+  const btn = f => `<button type="button" class="fchip${lookFilter === f.id ? " active" : ""}" data-filter="${esc(f.id)}" aria-pressed="${lookFilter === f.id}">${esc(f.label)}<span class="n">${lookCount(f.id)}</span></button>`;
+  const row = (who, items) => `<div class="frow"><span class="glbl">${esc(who)}</span>${items.map(btn).join("")}</div>`;
+  $("lookFilters").innerHTML =
+    `<div class="frow">${btn(LOOK_FILTERS[0])}</div>` +
+    row("女", LOOK_FILTERS.filter(f => f.who === "女")) +
+    row("男", LOOK_FILTERS.filter(f => f.who === "男"));
+  const list = filteredLooks();
+  $("lookGrid").innerHTML = list.map(it => {
+    const chips = lookStyleTags(it).map(t => `<span class="chip soft">${esc(LOOK_TAG[t])}</span>`).join("");
+    const pair = isCouple(it) ? `<span class="chip soft">女＋男</span>` : "";
+    return `<button type="button" class="look-card" data-id="${esc(it.id)}"><img src="${esc(it.thumb)}" alt="${esc(it.title)}" loading="lazy" decoding="async"><div class="lt">${esc(it.title)}</div><div class="tags">${pair}${chips}</div></button>`;
+  }).join("") || `<p class="placeholder">呢個分類暫時未有參考相。</p>`;
+  $("lookHelp").textContent = LOOK_HELP;
+}
+
+function paintLb() {
+  const list = filteredLooks();
+  const it = list[lbPos];
+  if (!it) return closeLb();
+  const img = $("lbImg");
+  img.src = it.file;
+  img.alt = it.title;
+  $("lbTitle").textContent = it.title;
+  $("lbNote").textContent = it.note || "";
+  $("lbNote").hidden = !it.note;
+  $("lbTags").innerHTML = lookStyleTags(it).map(t => `<span class="chip soft">${esc(LOOK_TAG[t])}</span>`).join("");
+  $("lbIdx").textContent = (lbPos + 1) + " / " + list.length;
+  const solo = list.length < 2;
+  $("lbPrev").disabled = solo;
+  $("lbNext").disabled = solo;
+}
+function openLb(id) {
+  const list = filteredLooks();
+  const i = list.findIndex(x => x.id === id);
+  if (i < 0) return;
+  lbPos = i;
+  paintLb();
+  $("lightbox").hidden = false;
+  document.body.classList.add("lb-open");
+  $("lbClose").focus();
+}
+function closeLb() {
+  if ($("lightbox").hidden) return;
+  const id = filteredLooks()[lbPos] && filteredLooks()[lbPos].id;
+  $("lightbox").hidden = true;
+  $("lbImg").removeAttribute("src");
+  document.body.classList.remove("lb-open");
+  const btn = id && document.querySelector('.look-card[data-id="' + CSS.escape(id) + '"]');
+  if (btn) btn.focus();
+}
+function stepLb(d) {
+  const list = filteredLooks();
+  if (list.length < 2) return;
+  lbPos = (lbPos + d + list.length) % list.length;
+  paintLb();
+}
+$("lookFilters").addEventListener("click", e => {
+  const b = e.target.closest("[data-filter]");
+  if (!b) return;
+  lookFilter = b.dataset.filter;
+  lbPos = 0;
+  renderLooks();
+});
+$("lookGrid").addEventListener("click", e => {
+  const card = e.target.closest(".look-card");
+  if (card) openLb(card.dataset.id);
+});
+$("lbClose").addEventListener("click", closeLb);
+$("lbPrev").addEventListener("click", () => stepLb(-1));
+$("lbNext").addEventListener("click", () => stepLb(1));
+$("lightbox").addEventListener("click", e => { if (e.target === $("lightbox")) closeLb(); });
+document.addEventListener("keydown", e => {
+  if ($("lightbox").hidden) return;
+  if (e.key === "Escape") closeLb();
+  else if (e.key === "ArrowLeft") stepLb(-1);
+  else if (e.key === "ArrowRight") stepLb(1);
+});
+let touchX = null;
+$("lightbox").addEventListener("touchstart", e => { touchX = e.changedTouches[0].clientX; }, { passive: true });
+$("lightbox").addEventListener("touchend", e => {
+  if (touchX == null) return;
+  const dx = e.changedTouches[0].clientX - touchX;
+  touchX = null;
+  if (Math.abs(dx) > 48) stepLb(dx < 0 ? 1 : -1);
+}, { passive: true });
+renderLooks();
+
 // Tabs（hash routing，file:// 都用得）
-const TABS = ["home", "pre", "day", "board", "notes"];
+const TABS = ["home", "pre", "day", "board", "notes", "look"];
 function show() {
   const id = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "home";
+  if (!$("lightbox").hidden) closeLb();
   document.querySelectorAll("section.page").forEach(s => s.classList.toggle("active", s.id === "p-" + id));
   document.querySelectorAll("nav.tabs a").forEach(a => a.classList.toggle("active", a.dataset.tab === id));
   requestAnimationFrame(() => window.scrollTo(0, 0));
