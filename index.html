@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f7f2ec">
+<meta name="robots" content="noindex, nofollow">
+<title>Scott × Shin Tung｜婚禮進度</title>
+<style>
+:root{
+  --bg:#f7f2ec; --card:#fffdfa; --ink:#3d3532; --muted:#8a7f79; --line:#ece3da;
+  --accent:#b9877f; --accent-soft:#f3e4e0;
+  --red:#c46a5f; --red-bg:#f8e3df; --yellow:#b8892e; --yellow-bg:#f7edd6;
+  --green:#6f8f72; --green-bg:#e3ede3; --grey:#8d8580; --grey-bg:#eee9e4;
+  --radius:18px; --tabh:64px;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink)}
+body{font-family:-apple-system,BlinkMacSystemFont,"PingFang HK","Noto Sans HK","Microsoft JhengHei","Helvetica Neue",Arial,sans-serif;
+  font-size:16px;line-height:1.55;padding-bottom:calc(var(--tabh) + env(safe-area-inset-bottom) + 16px)}
+a{color:var(--accent)}
+header.hero{padding:calc(22px + env(safe-area-inset-top)) 20px 14px;text-align:center}
+.hero .kicker{font-size:12px;letter-spacing:.25em;color:var(--muted);text-transform:uppercase}
+.hero h1{font-family:"Songti TC","Noto Serif HK",Georgia,serif;font-weight:600;font-size:26px;margin:6px 0 2px;letter-spacing:.02em}
+.hero h1 .amp{color:var(--accent);font-style:italic;margin:0 6px}
+.hero .sub{font-size:13px;color:var(--muted)}
+main{max-width:640px;margin:0 auto;padding:0 14px}
+section.page{display:none;animation:fade .25s ease}
+section.page.active{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+h2{font-size:20px;margin:10px 4px 12px;font-weight:700}
+h3{font-size:15px;margin:0 0 10px;color:var(--muted);font-weight:600;letter-spacing:.04em}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:16px;margin-bottom:14px;box-shadow:0 1px 2px rgba(80,60,50,.04)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+.date-card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:14px;text-align:center}
+.date-card .lbl{font-size:12px;color:var(--muted)}
+.date-card .d{font-size:17px;font-weight:700;margin:4px 0}
+.date-card .cd{font-size:28px;font-weight:700;color:var(--accent);line-height:1.1}
+.date-card .cd small{font-size:12px;color:var(--muted);font-weight:500}
+.ring-wrap{display:flex;align-items:center;gap:16px}
+.ring{--p:0;width:96px;height:96px;flex:none;border-radius:50%;
+  background:conic-gradient(var(--accent) calc(var(--p)*1%),var(--accent-soft) 0);display:grid;place-items:center}
+.ring::before{content:"";grid-area:1/1;width:76px;height:76px;border-radius:50%;background:var(--card)}
+.ring span{grid-area:1/1;font-size:22px;font-weight:700;z-index:1}
+.ring-wrap .meta{font-size:13px;color:var(--muted)}
+.ring-wrap .meta b{color:var(--ink)}
+.bar-row{margin:10px 0}
+.bar-row .top{display:flex;justify-content:space-between;font-size:14px;gap:8px}
+.bar-row .top span:last-child{color:var(--muted);white-space:nowrap}
+.bar{height:8px;background:var(--accent-soft);border-radius:99px;overflow:hidden;margin-top:5px}
+.bar i{display:block;height:100%;background:var(--accent);border-radius:99px}
+.bar.sage i{background:var(--green)}
+ul.list{list-style:none;margin:0;padding:0}
+ul.list li{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;padding:11px 0;border-top:1px solid var(--line)}
+ul.list li:first-child{border-top:0;padding-top:2px}
+ul.list .t{flex:1;min-width:0}
+ul.list .t small{display:block;color:var(--muted);font-size:13px;margin-top:2px}
+.chip{display:inline-block;font-size:12px;font-weight:600;padding:3px 10px;border-radius:99px;white-space:nowrap;background:var(--grey-bg);color:var(--grey)}
+.chip.ok{background:var(--green-bg);color:var(--green)}
+.chip.half{background:var(--yellow-bg);color:var(--yellow)}
+.chip.no{background:var(--red-bg);color:var(--red)}
+.chip.tbd{background:var(--grey-bg);color:var(--grey)}
+.chip.soft{background:var(--accent-soft);color:#93625b}
+.urgent li .num{flex:none;width:26px;height:26px;border-radius:50%;background:var(--red);color:#fff;font-size:13px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+.urgent li{justify-content:flex-start}
+.kv{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;font-size:14px}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;font-weight:500}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tags .chip{font-weight:500}
+.timeline{list-style:none;margin:0;padding:0 0 0 4px}
+.timeline li{position:relative;padding:0 0 14px 22px}
+.timeline li::before{content:"";position:absolute;left:0;top:6px;width:10px;height:10px;border-radius:50%;background:var(--accent)}
+.timeline li::after{content:"";position:absolute;left:4.5px;top:18px;bottom:0;width:1px;background:var(--line)}
+.timeline li:last-child{padding-bottom:0}
+.timeline li:last-child::after{display:none}
+.timeline .when{font-size:13px;color:var(--muted)}
+.lane{border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;border:1px solid var(--line);background:var(--card)}
+.lane h3{display:flex;align-items:center;gap:8px;color:var(--ink);margin-bottom:6px}
+.lane h3 .dot{width:12px;height:12px;border-radius:50%}
+.lane.red{border-left:5px solid var(--red)} .lane.red .dot{background:var(--red)}
+.lane.yellow{border-left:5px solid var(--yellow)} .lane.yellow .dot{background:var(--yellow)}
+.lane.green{border-left:5px solid var(--green)} .lane.green .dot{background:var(--green)}
+.lane.after{border-left:5px solid var(--grey)} .lane.after .dot{background:var(--grey)}
+.lane .desc{font-size:12px;color:var(--muted);margin:-2px 0 6px}
+.note{font-size:13px;color:var(--muted)}
+.callout{background:var(--accent-soft);border-radius:14px;padding:12px 14px;font-size:14px;margin-bottom:14px}
+.placeholder{color:var(--muted);font-style:italic}
+.links a{display:flex;justify-content:space-between;align-items:center;padding:12px 0;border-top:1px solid var(--line);text-decoration:none;color:var(--ink)}
+.links a:first-child{border-top:0}
+.links a span:last-child{color:var(--accent)}
+footer{max-width:640px;margin:8px auto 0;padding:0 18px;text-align:center;font-size:12px;color:var(--muted)}
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:10;background:rgba(255,253,250,.94);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-top:1px solid var(--line);display:flex;padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs a{flex:1;height:var(--tabh);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;text-decoration:none;color:var(--muted);font-size:11px;font-weight:600}
+nav.tabs a .ic{font-size:19px;line-height:1;filter:grayscale(1);opacity:.65}
+nav.tabs a.active{color:var(--accent)}
+nav.tabs a.active .ic{filter:none;opacity:1}
+@media (min-width:700px){
+  nav.tabs{max-width:640px;margin:0 auto 14px;border:1px solid var(--line);border-radius:22px;left:14px;right:14px}
+  .hero h1{font-size:30px}
+}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="kicker">Wedding Progress</div>
+  <h1>Scott<span class="amp">&amp;</span>Shin Tung</h1>
+  <div class="sub">Scott × Shin Tung ・ 資料更新至 <span id="asOf"></span></div>
+</header>
+
+<main>
+<!-- ============ 1. 首頁／總覽 ============ -->
+<section class="page" id="p-home">
+  <div class="grid2" id="dateCards"></div>
+
+  <div class="card">
+    <h3>🔴 緊急待辦</h3>
+    <ul class="list urgent" id="urgentList"></ul>
+  </div>
+
+  <div class="card">
+    <h3>整體進度</h3>
+    <div class="ring-wrap">
+      <div class="ring" id="ring"><span id="ringPct">0%</span></div>
+      <div class="meta" id="ringMeta"></div>
+    </div>
+    <div id="sectionBars" style="margin-top:12px"></div>
+  </div>
+
+  <div class="card">
+    <h3>預算總覽（以 Wedding Planning 為準）</h3>
+    <div id="budgetBars"></div>
+    <p class="note" id="budgetNote"></p>
+  </div>
+</section>
+
+<!-- ============ 2. Pre-wedding ============ -->
+<section class="page" id="p-pre">
+  <h2>📷 Pre-wedding・濟州</h2>
+  <div class="card">
+    <h3>基本資料</h3>
+    <dl class="kv" id="preInfo"></dl>
+  </div>
+  <div class="card">
+    <h3>行程</h3>
+    <ul class="timeline" id="preTimeline"></ul>
+  </div>
+  <div class="card">
+    <h3>拍攝元素</h3>
+    <div class="tags" id="preElements"></div>
+    <h3 style="margin-top:14px">已拒絕</h3>
+    <div class="tags" id="preRejected"></div>
+  </div>
+  <div class="card">
+    <h3>費用</h3>
+    <div id="preBudget"></div>
+  </div>
+  <div class="card">
+    <h3>Checklist</h3>
+    <ul class="list" id="preList"></ul>
+  </div>
+</section>
+
+<!-- ============ 3. 結婚當日 ============ -->
+<section class="page" id="p-day">
+  <h2>💍 結婚當日・2027-10-30</h2>
+  <div class="card">
+    <h3>場地</h3>
+    <dl class="kv" id="venueInfo"></dl>
+  </div>
+  <div class="card">
+    <h3>賓客人數（只列數字）</h3>
+    <div id="guestBars"></div>
+    <div class="callout" style="margin:12px 0 0">⚠️ 削客定加座仍未決定——喜帖／桌次暫時唔好當最終版。</div>
+  </div>
+  <div class="card">
+    <h3>當日流程骨架</h3>
+    <ul class="timeline" id="flow"></ul>
+    <p class="note" style="margin-bottom:0">詳細時間表：<span class="placeholder">待文件整理更新</span></p>
+  </div>
+  <div class="card">
+    <h3>Song List</h3>
+    <ul class="list" id="songList"></ul>
+  </div>
+  <div class="card">
+    <h3>Checklist</h3>
+    <ul class="list" id="dayList"></ul>
+  </div>
+</section>
+
+<!-- ============ 4. 進度看板 ============ -->
+<section class="page" id="p-board">
+  <h2>🗂️ 進度看板</h2>
+  <div id="lanes"></div>
+</section>
+
+<!-- ============ 5. 注意事項 ============ -->
+<section class="page" id="p-notes">
+  <h2>📌 注意事項</h2>
+  <div class="card">
+    <ul class="list" id="noteList"></ul>
+  </div>
+  <div class="card">
+    <h3>相關文件（需 Google Drive 權限）</h3>
+    <div class="links" id="links"></div>
+  </div>
+  <div class="card">
+    <h3>私隱</h3>
+    <p class="note" style="margin:0">本頁可經連結分享，所以唔會顯示任何賓客姓名或聯絡資料；賓客只列人數。</p>
+  </div>
+</section>
+</main>
+
+<footer>資料來源：「婚禮總覽」Doc ＋ Wedding Planning 表。數字如有出入，以 Wedding Planning 為準。</footer>
+
+<nav class="tabs" id="tabs">
+  <a href="#home" data-tab="home"><span class="ic">🏠</span>總覽</a>
+  <a href="#pre" data-tab="pre"><span class="ic">📷</span>Pre-wedding</a>
+  <a href="#day" data-tab="day"><span class="ic">💍</span>結婚當日</a>
+  <a href="#board" data-tab="board"><span class="ic">🗂️</span>進度看板</a>
+  <a href="#notes" data-tab="notes"><span class="ic">📌</span>注意事項</a>
+</nav>
+
+<script>
+/* =========================================================
+   DATA — 改資料只需要改呢度（唔好加賓客姓名）
+   status: ok=已完成/已確認(100) half=進行中/半鎖定/待確認(50) no=未開始/未決(0)
+   ========================================================= */
+const DATA = {
+  asOf: "2026-10-05",
+  dates: [
+    { label: "Pre-wedding 拍攝", date: "2026-10-15", place: "濟州" },
+    { label: "結婚當日", date: "2027-10-30", place: "Green House" }
+  ],
+  urgent: [
+    { t: "賓客人數決策", d: "名單約 167 ＋ TBC 約 30，場地 120 pax——削客定加座？" },
+    { t: "Pre-wedding 酒店確認", d: "10/14–17，待 SA 確認訂房" },
+    { t: "Pre-wedding 機票", d: "仍未訂" }
+  ],
+  budget: { total: 0, actual: 0, paid: 0, note: "金額見 Drive／預算管家" },
+  vendors: [
+    { name: "Green House（場地）", actual: 0, paid: 0, note: "金額見 Drive・已付約一半" },
+    { name: "SA Wedding（Pre-wedding）", actual: 0, paid: 0, note: "金額見 Drive・差額待核" }
+  ],
+  pre: {
+    info: [
+      ["供應商", "SA Wedding Team 3"],
+      ["拍攝日", "2026-10-15（已確認）"],
+      ["住宿", "2026-10-14 至 10-17"],
+      ["酒店", "待 SA 確認訂房"],
+      ["機票", "未訂"]
+    ],
+    timeline: [
+      { when: "10/14", t: "酒店入住", s: "half", c: "待確認" },
+      { when: "10/15", t: "拍攝日：日間 ＋ 日落前", s: "ok", c: "已確認" },
+      { when: "10/17", t: "退房", s: "half", c: "待確認" }
+    ],
+    elements: ["粉紅芒草", "蕎麥花", "樹林夕陽", "海邊（非沙灘）"],
+    rejected: ["氦氣球", "鮮花球"],
+    checklist: [
+      { t: "供應商 SA Wedding Team 3", s: "ok", c: "已確認" },
+      { t: "拍攝日 2026-10-15", s: "ok", c: "已確認" },
+      { t: "拍攝元素", d: "粉紅芒草／蕎麥花／樹林夕陽／海", s: "ok", c: "已定" },
+      { t: "酒店 10/14–17", d: "待 SA 確認", s: "half", c: "待確認" },
+      { t: "機票", s: "no", c: "未訂" },
+      { t: "SA 尾款核對", d: "細節見 Drive", s: "half", c: "待核" },
+      { t: "拍攝當日行程", d: "待文件整理更新", s: "no", c: "待安排" },
+      { t: "Pre 後成片", d: "拍攝後跟進", s: "no", c: "未到" }
+    ]
+  },
+  day: {
+    venue: [
+      ["場地", "Green House（半鎖定）"],
+      ["形式", "Lawn Ceremony ＋ Dinner Buffet"],
+      ["最低人數", "120 pax"],
+            ["費用", "已付約一半・細節見 Drive"],
+      ["交通", "錦上路 27 座旅遊巴，每 30 分鐘一班"],
+      ["晚宴時長", "約 6 小時"]
+    ],
+    guests: { list: 167, tbc: 30, venue: 120 },
+    flow: ["出入門", "草坪證婚", "迎賓", "進場", "誓詞", "晚宴／敬酒／送客"],
+    songs: [
+      { t: "Reception 等", d: "已有初稿約 32 首", s: "half", c: "初稿" },
+      { t: "Lawn Ceremony", d: "待補", s: "no", c: "待補" }
+    ],
+    checklist: [
+      { t: "場地 Green House", d: "Lawn ＋ Buffet；訂金進度見 Drive", s: "half", c: "半鎖定" },
+      { t: "賓客人數", d: "削客 vs 加座", s: "no", c: "未決" },
+      { t: "GH 合同收口", s: "no", c: "待跟進" },
+      { t: "喜帖", d: "人數未決前勿當最終", s: "no", c: "未開始" },
+      { t: "2P2V", s: "no", c: "未開始" },
+      { t: "化妝", s: "no", c: "未開始" },
+      { t: "花藝", s: "no", c: "未開始" },
+      { t: "MC", s: "no", c: "未開始" },
+      { t: "Song List", d: "Reception 初稿約 32 首；Lawn 待補", s: "half", c: "初稿" },
+      { t: "座位表", d: "人數未決前勿當最終", s: "no", c: "未開始" },
+      { t: "當日時間表", d: "流程骨架已有", s: "no", c: "未開始" }
+    ]
+  },
+  lanes: [
+    { k: "red", title: "紅・緊急", desc: "而家就要處理", items: ["賓客人數決策", "Pre-wedding 酒店確認", "Pre-wedding 機票"] },
+    { k: "yellow", title: "黃・近期", desc: "Pre-wedding 前後要跟", items: ["SA 尾款核對", "拍攝當日行程", "Pre 後成片"] },
+    { k: "green", title: "綠・按部就班", desc: "唔急，但要陸續推進（未完成）", items: ["Green House 合同收口", "喜帖", "2P2V", "化妝・花藝・MC・Song List", "座位表", "當日時間表"] },
+    { k: "after", title: "事後", desc: "婚禮之後", items: ["多謝卡", "相片尾款・紀念"] }
+  ],
+  notes: [
+    { t: "人數未決前，喜帖／桌次唔好當最終版", s: "no", c: "重要" },
+    { t: "賓客人數：削到 ≤120 定 Green House 加座", d: "名單約 167、TBC 約 30", s: "no", c: "待決定" },
+    { t: "濟州酒店：待 SA 確認訂房", s: "half", c: "待確認" },
+    { t: "Pre-wedding 機票未訂", s: "no", c: "未訂" },
+    { t: "SA 尾款／收據對帳", d: "細節見 Drive", s: "half", c: "待核" },
+    { t: "Pre-wedding 同大日子分開處理", s: "tbd", c: "提醒" },
+    { t: "所有數字以 Wedding Planning 表為準", s: "tbd", c: "提醒" }
+  ],
+  links: [
+    { t: "婚禮總覽 Doc", u: "https://docs.google.com/document/d/1NW8eIuWfjq3XF1HhQ7F88jk1razGWUK1KMKwrkpSdAs/edit" },
+    { t: "Wedding Planning 表", u: "https://docs.google.com/spreadsheets/d/19PsnliWSnux_M57P9YWxTJOQnfvnDwYGesC5yBfWNTA/edit" },
+    { t: "Pre-wedding Drive 夾", u: "https://drive.google.com/drive/folders/1p6M_vS-yViaX4RvvtD93MZSuqG_NP24F" }
+  ]
+};
+
+/* ========================= RENDER ========================= */
+const $ = id => document.getElementById(id);
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const money = n => "$" + Math.round(n).toLocaleString("en-US");
+const SCORE = { ok: 100, half: 50, no: 0 };
+const pctOf = list => { const l = list.filter(i => i.s in SCORE); return l.length ? Math.round(l.reduce((a, i) => a + SCORE[i.s], 0) / l.length) : 0; };
+const chip = (s, c) => `<span class="chip ${s || "tbd"}">${esc(c)}</span>`;
+const bar = (label, right, p, cls = "") => `<div class="bar-row"><div class="top"><span>${esc(label)}</span><span>${right}</span></div><div class="bar ${cls}"><i style="width:${Math.min(100, Math.max(0, p))}%"></i></div></div>`;
+const listHTML = items => items.map(i => `<li><div class="t">${esc(i.t)}${i.d ? `<small>${esc(i.d)}</small>` : ""}</div>${chip(i.s, i.c)}</li>`).join("");
+const kv = rows => rows.map(([k, v]) => `<dt>${esc(k)}</dt><dd>${esc(v)}</dd>`).join("");
+
+function hkToday() {
+  const s = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Hong_Kong", year: "numeric", month: "2-digit", day: "2-digit" }).format(new Date());
+  return Date.parse(s + "T00:00:00Z");
+}
+function daysTo(iso) { return Math.round((Date.parse(iso + "T00:00:00Z") - hkToday()) / 86400000); }
+
+$("asOf").textContent = DATA.asOf;
+
+// 首頁
+$("dateCards").innerHTML = DATA.dates.map(d => {
+  const n = daysTo(d.date);
+  const cd = n > 0 ? `${n}<small> 日後</small>` : n === 0 ? "就係今日" : `<small>已過 ${-n} 日</small>`;
+  return `<div class="date-card"><div class="lbl">${esc(d.label)}</div><div class="d">${esc(d.date)}</div><div class="cd">${cd}</div><div class="lbl">${esc(d.place)}</div></div>`;
+}).join("");
+$("urgentList").innerHTML = DATA.urgent.map((u, i) => `<li><span class="num">${i + 1}</span><div class="t">${esc(u.t)}<small>${esc(u.d)}</small></div></li>`).join("");
+
+const prePct = pctOf(DATA.pre.checklist), dayPct = pctOf(DATA.day.checklist);
+const all = DATA.pre.checklist.concat(DATA.day.checklist), allPct = pctOf(all);
+const done = all.filter(i => i.s === "ok").length, half = all.filter(i => i.s === "half").length;
+$("ring").style.setProperty("--p", allPct);
+$("ringPct").textContent = allPct + "%";
+$("ringMeta").innerHTML = `共 <b>${all.length}</b> 項（Pre ＋ 大日子）<br>已完成 <b>${done}</b>・進行中／待確認 <b>${half}</b>・未開始 <b>${all.length - done - half}</b><br><span style="font-size:12px">計法：已完成 100%、進行中 50%、未開始 0%</span>`;
+$("sectionBars").innerHTML = bar("Pre-wedding", prePct + "%", prePct, "sage") + bar("結婚當日", dayPct + "%", dayPct, "sage");
+
+$("budgetBars").innerHTML = DATA.vendors.map(v =>
+  `<div class="bar-row"><div class="bar-label"><span>${esc(v.name)}</span><span>${esc(v.note || "狀態見 Drive")}</span></div></div>`
+).join("");
+$("budgetNote").textContent = "公開站唔顯示付款金額；詳情見 Wedding Planning／預算管家（Drive）。";
+
+// Pre-wedding
+$("preInfo").innerHTML = kv(DATA.pre.info);
+$("preTimeline").innerHTML = DATA.pre.timeline.map(x => `<li><div class="when">${esc(x.when)}</div><div>${esc(x.t)} ${chip(x.s, x.c)}</div></li>`).join("");
+$("preElements").innerHTML = DATA.pre.elements.map(e => `<span class="chip soft">${esc(e)}</span>`).join("");
+$("preRejected").innerHTML = DATA.pre.rejected.map(e => `<span class="chip tbd"><s>${esc(e)}</s></span>`).join("");
+$("preBudget").innerHTML = `<p class="note">付款／尾款對帳細節唔放公開站，請睇 Drive「婚禮總覽」同 Wedding Planning。</p>`;
+$("preList").innerHTML = listHTML(DATA.pre.checklist);
+
+// 結婚當日
+$("venueInfo").innerHTML = kv(DATA.day.venue);
+const G = DATA.day.guests, gmax = G.list + G.tbc;
+$("guestBars").innerHTML =
+  bar("名單（約）", G.list + " 人", G.list / gmax * 100) +
+  bar("TBC（約）", G.tbc + " 人", G.tbc / gmax * 100) +
+  bar("Green House 場地", G.venue + " pax", G.venue / gmax * 100, "sage");
+$("flow").innerHTML = DATA.day.flow.map((f, i) => `<li><div class="when">第 ${i + 1} 步</div><div>${esc(f)}</div></li>`).join("");
+$("songList").innerHTML = listHTML(DATA.day.songs);
+$("dayList").innerHTML = listHTML(DATA.day.checklist);
+
+// 進度看板
+$("lanes").innerHTML = DATA.lanes.map(l => `<div class="lane ${l.k}"><h3><span class="dot"></span>${esc(l.title)}<span class="chip tbd" style="margin-left:auto">${l.items.length}</span></h3><div class="desc">${esc(l.desc)}</div><ul class="list">${l.items.map(i => `<li><div class="t">${esc(i)}</div></li>`).join("")}</ul></div>`).join("");
+
+// 注意事項
+$("noteList").innerHTML = listHTML(DATA.notes);
+$("links").innerHTML = DATA.links.map(l => `<a href="${esc(l.u)}" target="_blank" rel="noopener"><span>${esc(l.t)}</span><span>開啟 ↗</span></a>`).join("");
+
+// Tabs（hash routing，file:// 都用得）
+const TABS = ["home", "pre", "day", "board", "notes"];
+function show() {
+  const id = TABS.includes(location.hash.slice(1)) ? location.hash.slice(1) : "home";
+  document.querySelectorAll("section.page").forEach(s => s.classList.toggle("active", s.id === "p-" + id));
+  document.querySelectorAll("nav.tabs a").forEach(a => a.classList.toggle("active", a.dataset.tab === id));
+  requestAnimationFrame(() => window.scrollTo(0, 0));
+}
+window.addEventListener("hashchange", show);
+show();
+</script>
+</body>
+</html>
