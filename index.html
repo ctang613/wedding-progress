@@ -234,27 +234,30 @@ const DATA = {
     { label: "結婚當日", date: "2027-10-30", place: "Green House" }
   ],
   urgent: [
-    { t: "賓客人數決策", d: "名單約 167 ＋ TBC 約 30，場地 120 pax——削客定加座？" },
+    { t: "旅遊保險", d: "機票已訂，保險仍未買" },
     { t: "Pre-wedding 酒店確認", d: "10/14–17，待 SA 確認訂房" },
-    { t: "Pre-wedding 機票", d: "仍未訂" }
+    { t: "自備清單", d: "鞋／男士恤衫／內搭／雨具——仍有未買（見 Drive）" }
   ],
   budget: { total: 0, actual: 0, paid: 0, note: "金額見 Drive／預算管家" },
   vendors: [
     { name: "Green House（場地）", actual: 0, paid: 0, note: "金額見 Drive・已付約一半" },
-    { name: "SA Wedding（Pre-wedding）", actual: 0, paid: 0, note: "金額見 Drive・差額待核" }
+    { name: "SA Wedding（Pre-wedding）", actual: 0, paid: 0, note: "報名優惠已選減 $2,500・其餘金額見 Drive" }
   ],
   pre: {
     info: [
       ["供應商", "SA Wedding Team 3"],
       ["拍攝日", "2026-10-15（已確認）"],
-      ["住宿", "2026-10-14 至 10-17"],
-      ["酒店", "待 SA 確認訂房"],
-      ["機票", "未訂"]
+      ["濟州住宿", "2026-10-14 至 10-17（酒店待 SA 確認）"],
+      ["機票", "已訂（日期見行程；航班細節見 Drive）"],
+      ["首爾", "10/17–18 一晚"],
+      ["回港", "10/19"],
+      ["報名優惠", "已選減 $2,500"]
     ],
     timeline: [
-      { when: "10/14", t: "酒店入住", s: "half", c: "待確認" },
+      { when: "10/14", t: "飛濟州 ＋ 酒店入住", s: "ok", c: "機票已訂" },
       { when: "10/15", t: "拍攝日：日間 ＋ 日落前", s: "ok", c: "已確認" },
-      { when: "10/17", t: "退房", s: "half", c: "待確認" }
+      { when: "10/17", t: "飛首爾・住一晚", s: "ok", c: "已訂" },
+      { when: "10/19", t: "回港", s: "ok", c: "機票已訂" }
     ],
     elements: ["粉紅芒草", "蕎麥花", "樹林夕陽", "海邊（非沙灘）"],
     rejected: ["氦氣球", "鮮花球"],
@@ -262,10 +265,15 @@ const DATA = {
       { t: "供應商 SA Wedding Team 3", s: "ok", c: "已確認" },
       { t: "拍攝日 2026-10-15", s: "ok", c: "已確認" },
       { t: "拍攝元素", d: "粉紅芒草／蕎麥花／樹林夕陽／海", s: "ok", c: "已定" },
+      { t: "機票 10/14・10/17・10/19", d: "已訂・細節見 Drive", s: "ok", c: "已訂" },
+      { t: "首爾住宿 10/17–18", d: "一晚・細節見 Drive", s: "ok", c: "已訂" },
+      { t: "報名優惠", d: "減 $2,500", s: "ok", c: "已選" },
       { t: "酒店 10/14–17", d: "待 SA 確認", s: "half", c: "待確認" },
-      { t: "機票", s: "no", c: "未訂" },
+      { t: "旅遊保險", s: "no", c: "未買" },
+      { t: "自備（鞋／恤衫／內搭／雨具）", d: "仍有未買・見 Drive", s: "half", c: "未齊" },
+      { t: "婚紗／西裝參考", d: "已有 SA 參考・見 Doc", s: "half", c: "見 Doc" },
       { t: "SA 尾款核對", d: "細節見 Drive", s: "half", c: "待核" },
-      { t: "拍攝當日行程", d: "待文件整理更新", s: "no", c: "待安排" },
+      { t: "拍攝當日行程", d: "細節見 Drive", s: "half", c: "骨架有" },
       { t: "Pre 後成片", d: "拍攝後跟進", s: "no", c: "未到" }
     ]
   },
@@ -273,8 +281,8 @@ const DATA = {
     venue: [
       ["場地", "Green House（半鎖定）"],
       ["形式", "Lawn Ceremony ＋ Dinner Buffet"],
-      ["最低人數", "120 pax"],
-            ["費用", "已付約一半・細節見 Drive"],
+      ["目標人數", "≤120（已定目標）"],
+      ["費用", "已付約一半・細節見 Drive"],
       ["交通", "錦上路 27 座旅遊巴，每 30 分鐘一班"],
       ["晚宴時長", "約 6 小時"]
     ],
@@ -286,32 +294,34 @@ const DATA = {
     ],
     checklist: [
       { t: "場地 Green House", d: "Lawn ＋ Buffet；訂金進度見 Drive", s: "half", c: "半鎖定" },
-      { t: "賓客人數", d: "削客 vs 加座", s: "no", c: "未決" },
+      { t: "賓客人數", d: "目標 ≤120・削客進行中", s: "half", c: "目標已定" },
       { t: "GH 合同收口", s: "no", c: "待跟進" },
-      { t: "喜帖", d: "人數未決前勿當最終", s: "no", c: "未開始" },
+      { t: "喜帖", d: "人數收口後再定最終", s: "no", c: "未開始" },
       { t: "2P2V", s: "no", c: "未開始" },
       { t: "化妝", s: "no", c: "未開始" },
       { t: "花藝", s: "no", c: "未開始" },
       { t: "MC", s: "no", c: "未開始" },
       { t: "Song List", d: "Reception 初稿約 32 首；Lawn 待補", s: "half", c: "初稿" },
-      { t: "座位表", d: "人數未決前勿當最終", s: "no", c: "未開始" },
+      { t: "座位表", d: "人數收口後", s: "no", c: "未開始" },
       { t: "當日時間表", d: "流程骨架已有", s: "no", c: "未開始" }
     ]
   },
   lanes: [
-    { k: "red", title: "紅・緊急", desc: "而家就要處理", items: ["賓客人數決策", "Pre-wedding 酒店確認", "Pre-wedding 機票"] },
-    { k: "yellow", title: "黃・近期", desc: "Pre-wedding 前後要跟", items: ["SA 尾款核對", "拍攝當日行程", "Pre 後成片"] },
+    { k: "red", title: "紅・緊急", desc: "而家就要處理", items: ["旅遊保險", "Pre-wedding 酒店確認", "自備未買項目"] },
+    { k: "yellow", title: "黃・近期", desc: "Pre-wedding 前後要跟", items: ["SA 尾款核對", "拍攝當日接人時間", "賓客削至 ≤120", "Pre 後成片"] },
     { k: "green", title: "綠・按部就班", desc: "唔急，但要陸續推進（未完成）", items: ["Green House 合同收口", "喜帖", "2P2V", "化妝・花藝・MC・Song List", "座位表", "當日時間表"] },
     { k: "after", title: "事後", desc: "婚禮之後", items: ["多謝卡", "相片尾款・紀念"] }
   ],
   notes: [
-    { t: "人數未決前，喜帖／桌次唔好當最終版", s: "no", c: "重要" },
-    { t: "賓客人數：削到 ≤120 定 Green House 加座", d: "名單約 167、TBC 約 30", s: "no", c: "待決定" },
+    { t: "賓客目標 ≤120（已定）", d: "名單約 167、TBC 約 30——削客進行中", s: "half", c: "進行中" },
+    { t: "人數收口前，喜帖／桌次唔好當最終版", s: "no", c: "重要" },
     { t: "濟州酒店：待 SA 確認訂房", s: "half", c: "待確認" },
-    { t: "Pre-wedding 機票未訂", s: "no", c: "未訂" },
+    { t: "機票已訂；旅遊保險未買", s: "half", c: "保險未買" },
+    { t: "自備清單仍有未買", d: "鞋／恤衫／內搭／雨具・見 Drive", s: "half", c: "未齊" },
+    { t: "SA 婚紗／西裝參考已有", d: "見 Doc・唔喺公開站貼私人 link", s: "tbd", c: "見 Doc" },
     { t: "SA 尾款／收據對帳", d: "細節見 Drive", s: "half", c: "待核" },
     { t: "Pre-wedding 同大日子分開處理", s: "tbd", c: "提醒" },
-    { t: "所有數字以 Wedding Planning 表為準", s: "tbd", c: "提醒" }
+    { t: "所有金額以 Wedding Planning 表為準", s: "tbd", c: "提醒" }
   ],
   links: [
     { t: "婚禮總覽 Doc", u: "https://docs.google.com/document/d/1NW8eIuWfjq3XF1HhQ7F88jk1razGWUK1KMKwrkpSdAs/edit" },
